@@ -1,6 +1,7 @@
 class CreateBusinesses < ActiveRecord::Migration[5.1]
   def change
     create_table :businesses do |t|
+      t.belongs_to :owner, foreign_key: true
       t.string :name
 
       t.timestamps
