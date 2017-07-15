@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Purchase Options</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Name</th>
+      <th>Redemption qty</th>
+      <th>Min price</th>
+      <th>Retail price</th>
+      <th>Max per person</th>
+      <th>Quantity available</th>
+      <th>Sku</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchase_options.each do |purchase_option| %>
+      <tr>
+        <td><%= purchase_option.product %></td>
+        <td><%= purchase_option.name %></td>
+        <td><%= purchase_option.redemption_qty %></td>
+        <td><%= purchase_option.min_price %></td>
+        <td><%= purchase_option.retail_price %></td>
+        <td><%= purchase_option.max_per_person %></td>
+        <td><%= purchase_option.quantity_available %></td>
+        <td><%= purchase_option.sku %></td>
+        <td><%= link_to 'Show', purchase_option %></td>
+        <td><%= link_to 'Edit', edit_purchase_option_path(purchase_option) %></td>
+        <td><%= link_to 'Destroy', purchase_option, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Purchase Option', new_purchase_option_path %>

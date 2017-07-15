@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @product.category_id %>
+</p>
+
+<p>
+  <strong>Business:</strong>
+  <%= @product.business_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @product.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong>Show discount:</strong>
+  <%= @product.show_discount %>
+</p>
+
+<p>
+  <strong>Gifting enabled:</strong>
+  <%= @product.gifting_enabled %>
+</p>
+
+<p>
+  <strong>Sharing enabled:</strong>
+  <%= @product.sharing_enabled %>
+</p>
+
+<p>
+  <strong>Mobile call enabled:</strong>
+  <%= @product.mobile_call_enabled %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

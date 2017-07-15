@@ -1,0 +1,57 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% product.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :category_id %>
+    <%= form.number_field :category_id, id: :product_category_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :business_id %>
+    <%= form.number_field :business_id, id: :product_business_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :product_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :product_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :show_discount %>
+    <%= form.check_box :show_discount, id: :product_show_discount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gifting_enabled %>
+    <%= form.check_box :gifting_enabled, id: :product_gifting_enabled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sharing_enabled %>
+    <%= form.check_box :sharing_enabled, id: :product_sharing_enabled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mobile_call_enabled %>
+    <%= form.check_box :mobile_call_enabled, id: :product_mobile_call_enabled %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

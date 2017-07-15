@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product: one
+  name: MyString
+  redemption_qty: 1
+  min_price: 9.99
+  retail_price: 9.99
+  max_per_person: 1
+  quantity_available: 1
+  sku: MyString
+
+two:
+  product: two
+  name: MyString
+  redemption_qty: 1
+  min_price: 9.99
+  retail_price: 9.99
+  max_per_person: 1
+  quantity_available: 1
+  sku: MyString

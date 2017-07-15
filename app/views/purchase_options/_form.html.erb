@@ -1,0 +1,57 @@
+<%= form_with(model: purchase_option, local: true) do |form| %>
+  <% if purchase_option.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(purchase_option.errors.count, "error") %> prohibited this purchase_option from being saved:</h2>
+
+      <ul>
+      <% purchase_option.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :product_id %>
+    <%= form.text_field :product_id, id: :purchase_option_product_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :purchase_option_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :redemption_qty %>
+    <%= form.number_field :redemption_qty, id: :purchase_option_redemption_qty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :min_price %>
+    <%= form.text_field :min_price, id: :purchase_option_min_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :retail_price %>
+    <%= form.text_field :retail_price, id: :purchase_option_retail_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :max_per_person %>
+    <%= form.number_field :max_per_person, id: :purchase_option_max_per_person %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity_available %>
+    <%= form.number_field :quantity_available, id: :purchase_option_quantity_available %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sku %>
+    <%= form.text_field :sku, id: :purchase_option_sku %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

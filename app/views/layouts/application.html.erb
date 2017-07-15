@@ -11,7 +11,7 @@
   <body>
     <nav>
       <ul>
-        <li>Product <%#= link_to 'HTML', products_path %> <%#= link_to 'JSON', products_path(:format => :json) %></li>
+        <li>Product <%= link_to 'HTML', products_path %> <%= link_to 'JSON', products_path(:format => :json) %></li>
       </ul>
     </nav>
     <%= yield %>

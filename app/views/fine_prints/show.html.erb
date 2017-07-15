@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @fine_print.product %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @fine_print.text %>
+</p>
+
+<%= link_to 'Edit', edit_fine_print_path(@fine_print) %> |
+<%= link_to 'Back', fine_prints_path %>

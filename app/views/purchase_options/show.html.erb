@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @purchase_option.product %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @purchase_option.name %>
+</p>
+
+<p>
+  <strong>Redemption qty:</strong>
+  <%= @purchase_option.redemption_qty %>
+</p>
+
+<p>
+  <strong>Min price:</strong>
+  <%= @purchase_option.min_price %>
+</p>
+
+<p>
+  <strong>Retail price:</strong>
+  <%= @purchase_option.retail_price %>
+</p>
+
+<p>
+  <strong>Max per person:</strong>
+  <%= @purchase_option.max_per_person %>
+</p>
+
+<p>
+  <strong>Quantity available:</strong>
+  <%= @purchase_option.quantity_available %>
+</p>
+
+<p>
+  <strong>Sku:</strong>
+  <%= @purchase_option.sku %>
+</p>
+
+<%= link_to 'Edit', edit_purchase_option_path(@purchase_option) %> |
+<%= link_to 'Back', purchase_options_path %>
