@@ -10,49 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706045224) do
-
-  create_table "businesses", force: :cascade do |t|
-    t.integer "owner_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_id"], name: "index_businesses_on_owner_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.integer "parent_id"
-    t.string "name"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "category_references", force: :cascade do |t|
-    t.integer "category_id"
-    t.integer "reference_id"
-    t.string "reference_type"
-    t.boolean "primary"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_category_references_on_category_id"
-  end
-
-  create_table "owners", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.string "title"
-    t.integer "category_id"
-    t.integer "permission_level"
-    t.string "sku"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_products_on_category_id"
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end
