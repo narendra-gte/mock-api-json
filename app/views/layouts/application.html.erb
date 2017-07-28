@@ -9,11 +9,13 @@
   </head>
 
   <body>
+    <%if params[:controller] == "products"%>
     <nav>
       <ul>
         <li>Product <%= link_to 'HTML', products_path %> <%= link_to 'JSON', products_path(:format => :json) %></li>
       </ul>
     </nav>
+    <%end%>
     <%= yield %>
   </body>
 </html>

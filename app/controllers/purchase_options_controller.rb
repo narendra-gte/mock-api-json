@@ -1,6 +1,10 @@
 class PurchaseOptionsController < ApplicationController
   before_action :set_purchase_option, only: [:show, :edit, :update, :destroy]
 
+  def get_purchase_options_of_product
+    @purchase_options = PurchaseOption.where(:product_id=>params[:product_id])
+  end
+
   # GET /purchase_options
   # GET /purchase_options.json
   def index

@@ -1,6 +1,9 @@
 class FinePrintsController < ApplicationController
   before_action :set_fine_print, only: [:show, :edit, :update, :destroy]
 
+  def get_fine_print_of_product
+    @fine_print = FinePrint.where(:product_id=>params[:product_id])
+  end
   # GET /fine_prints
   # GET /fine_prints.json
   def index

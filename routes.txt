@@ -1,0 +1,45 @@
+                                          Prefix Verb         URI Pattern                                                 Controller#Action
+                                            tags GET          /tags(.:format)                                             tags#index
+                                                 POST         /tags(.:format)                                             tags#create
+                                         new_tag GET          /tags/new(.:format)                                         tags#new
+                                        edit_tag GET          /tags/:id/edit(.:format)                                    tags#edit
+                                             tag GET          /tags/:id(.:format)                                         tags#show
+                                                 PATCH        /tags/:id(.:format)                                         tags#update
+                                                 PUT          /tags/:id(.:format)                                         tags#update
+                                                 DELETE       /tags/:id(.:format)                                         tags#destroy
+                                  tag_categories GET          /tag_categories(.:format)                                   tag_categories#index
+                                                 POST         /tag_categories(.:format)                                   tag_categories#create
+                                new_tag_category GET          /tag_categories/new(.:format)                               tag_categories#new
+                               edit_tag_category GET          /tag_categories/:id/edit(.:format)                          tag_categories#edit
+                                    tag_category GET          /tag_categories/:id(.:format)                               tag_categories#show
+                                                 PATCH        /tag_categories/:id(.:format)                               tag_categories#update
+                                                 PUT          /tag_categories/:id(.:format)                               tag_categories#update
+                                                 DELETE       /tag_categories/:id(.:format)                               tag_categories#destroy
+get_purchase_options_of_product_purchase_options GET          /purchase_options/get_purchase_options_of_product(.:format) purchase_options#get_purchase_options_of_product
+                                purchase_options GET          /purchase_options(.:format)                                 purchase_options#index
+                                                 POST         /purchase_options(.:format)                                 purchase_options#create
+                             new_purchase_option GET          /purchase_options/new(.:format)                             purchase_options#new
+                            edit_purchase_option GET          /purchase_options/:id/edit(.:format)                        purchase_options#edit
+                                 purchase_option GET          /purchase_options/:id(.:format)                             purchase_options#show
+                                                 PATCH        /purchase_options/:id(.:format)                             purchase_options#update
+                                                 PUT          /purchase_options/:id(.:format)                             purchase_options#update
+                                                 DELETE       /purchase_options/:id(.:format)                             purchase_options#destroy
+           get_fine_print_of_product_fine_prints GET          /fine_prints/get_fine_print_of_product(.:format)            fine_prints#get_fine_print_of_product
+                                     fine_prints GET          /fine_prints(.:format)                                      fine_prints#index
+                                                 POST         /fine_prints(.:format)                                      fine_prints#create
+                                  new_fine_print GET          /fine_prints/new(.:format)                                  fine_prints#new
+                                 edit_fine_print GET          /fine_prints/:id/edit(.:format)                             fine_prints#edit
+                                      fine_print GET          /fine_prints/:id(.:format)                                  fine_prints#show
+                                                 PATCH        /fine_prints/:id(.:format)                                  fine_prints#update
+                                                 PUT          /fine_prints/:id(.:format)                                  fine_prints#update
+                                                 DELETE       /fine_prints/:id(.:format)                                  fine_prints#destroy
+                                        products GET          /products(.:format)                                         products#index
+                                                 POST         /products(.:format)                                         products#create
+                                     new_product GET          /products/new(.:format)                                     products#new
+                                    edit_product GET          /products/:id/edit(.:format)                                products#edit
+                                         product GET          /products/:id(.:format)                                     products#show
+                                                 PATCH        /products/:id(.:format)                                     products#update
+                                                 PUT          /products/:id(.:format)                                     products#update
+                                                 DELETE       /products/:id(.:format)                                     products#destroy
+                                            root GET          /                                                           pages#main
+                                                 POST|OPTIONS /products(.:format)                                         products#create

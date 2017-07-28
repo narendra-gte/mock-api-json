@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.includes(:fine_prints)
+    @products = Product.includes(:fine_prints).order("created_at DESC")
   end
 
   # GET /products/1

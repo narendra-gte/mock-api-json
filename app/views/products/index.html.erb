@@ -29,6 +29,8 @@
         <td><%= product.sharing_enabled %></td>
         <td><%= product.mobile_call_enabled %></td>
         <td><%= link_to 'Show', product %></td>
+        <td><%= link_to "Fine Prints",get_fine_print_of_product_fine_prints_path(product_id:product.id)%></td>
+        <td><%= link_to "Purchase Options",get_purchase_options_of_product_purchase_options_path(product_id:product.id)%></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
