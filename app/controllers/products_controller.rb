@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   # GET /products
   # GET /products.json
   def index
@@ -24,17 +24,49 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    @product = Product.create!(product_params)
+    params[:product][:fine_prints].each do |fine_print|
+      FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
+    end
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
+    params[:product][:purchaseOptions].each_with_index do |purchase_option,index|
+       PurchaseOption.create!(
+        product_id:@product.id,
+        name: purchase_option["name"],
+        redemption_qty: purchase_option["redemption_qty"],
+        min_price: purchase_option["min_price"],
+        retail_price: purchase_option["retail_price"],
+        max_per_person: purchase_option["max_per_person"],
+        quantity_available: purchase_option["quantity_available"],
+        sku: purchase_option["sku"])
+    end
+
+    params[:product][:targetCustomers].each do |target_option|
+      if target_option["checked"]
+          new_target_customer = TargetCustomer.create!(gender:target_option["gender"] , min_age:target_option["minAge"] , max_age:target_option["maxAge"])
+          ProductsTargetCustomer.create!(product_id: @product.id, target_customer_id: new_target_customer.id)
       end
     end
+
+    params[:product][:image_associations].each_with_index do |image,index|
+      if index == 0
+        ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: true)
+      else
+        ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: false)
+      end
+    end
+    if !@product.errors
+      status = "OK"
+    else
+      status = "unprocessable_entity"
+    end
+    render :json=> {
+      product: @product,
+      fine_prints:@product.fine_prints,
+      purchase_options:@product.purchase_options,
+      target_options:@product.target_customers,
+      images:@product.images_products,
+    }
   end
 
   # PATCH/PUT /products/1

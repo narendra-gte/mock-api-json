@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :fine_prints
   resources :products
   root 'pages#main'
+  match "/products"=>"products#create", :via=>["POST","OPTIONS"]
 end
