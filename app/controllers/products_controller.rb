@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.includes(:fine_prints).order("created_at DESC")
+    @products = Product.active.includes(:fine_prints).order("created_at DESC")
   end
 
   # GET /products/1
@@ -83,14 +83,12 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @product.status = 'archived'
+    @product.save
+    render :json => {
+      status:"archived"
+    }
   end
 
   private
