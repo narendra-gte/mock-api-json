@@ -34,6 +34,7 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.create!(product_params)
+    @product.update_attributes(status:1)
     params[:product][:fine_prints].each do |fine_print|
       FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
     end
