@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   end
 
   def archive_product
-    product = Product.find(params[:product_id])
+    product = Product.find(params[:id])
     product.status = 'archived'
     product.save
     render :json => {

@@ -12,9 +12,8 @@ Rails.application.routes.draw do
       get :get_fine_print_of_product
     end
   end
-  resources :products do
-    post :archive_product
-  end
+  resources :products
   root 'pages#main'
   match "/products"=>"products#create", :via=>["POST","OPTIONS"]
+  match "/archive_product"=>"products#archive_product", :via=>["POST","OPTIONS"]
 end
