@@ -33,6 +33,7 @@ get_purchase_options_of_product_purchase_options GET          /purchase_options/
                                                  PATCH        /fine_prints/:id(.:format)                                  fine_prints#update
                                                  PUT          /fine_prints/:id(.:format)                                  fine_prints#update
                                                  DELETE       /fine_prints/:id(.:format)                                  fine_prints#destroy
+                         product_archive_product POST         /products/:product_id/archive_product(.:format)             products#archive_product
                                         products GET          /products(.:format)                                         products#index
                                                  POST         /products(.:format)                                         products#create
                                      new_product GET          /products/new(.:format)                                     products#new

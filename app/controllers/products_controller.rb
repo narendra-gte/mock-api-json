@@ -7,6 +7,15 @@ class ProductsController < ApplicationController
     @products = Product.active.includes(:fine_prints).order("created_at DESC")
   end
 
+  def archive_product
+    product = Product.find(params[:product_id])
+    product.status = 'archived'
+    product.save
+    render :json => {
+      status:"archived"
+    }
+  end
+
   # GET /products/1
   # GET /products/1.json
   def show
