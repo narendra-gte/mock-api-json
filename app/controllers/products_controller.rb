@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.active.includes(:fine_prints).order("created_at DESC")
+    @products = Product.all.includes(:fine_prints).order("created_at DESC")
   end
 
   def archive_product
@@ -34,7 +34,13 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = Product.create!(product_params)
-    @product.update_attributes(status:1)
+
+    if params[:product][:has_requested_new_category]
+      @product.update_attributes(status:"pending_category_approval")
+    else
+      @product.update_attributes(status:"active")
+    end
+
     params[:product][:fine_prints].each do |fine_print|
       FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
     end
