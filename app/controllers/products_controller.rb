@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     @products = Product.where(business_id: @current_user).includes(:fine_prints).order("created_at DESC")
-    authorize Product
+    # authorize Product
     @products = Product.all.includes(:fine_prints).order("created_at DESC")
   end
 
@@ -35,7 +35,7 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = authorize Product.create!(product_params)
+    @product = Product.create!(product_params)
 
     if params[:product][:has_requested_new_category]
       @product.update_attributes(status:"pending_category_approval")
@@ -112,7 +112,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = authorize Product.find(params[:id])
+      @product = Product.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
