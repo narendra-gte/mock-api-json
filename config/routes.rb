@@ -18,4 +18,5 @@ Rails.application.routes.draw do
     controller: "application",
     action: "handle_options_request",
     via: [:options]
+  match "/archive_product"=>"products#archive_product", :via=>["POST","OPTIONS"]
 end

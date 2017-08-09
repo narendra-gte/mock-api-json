@@ -6,6 +6,16 @@ class ProductsController < ApplicationController
   def index
     @products = Product.where(business_id: @current_user).includes(:fine_prints).order("created_at DESC")
     authorize Product
+    @products = Product.all.includes(:fine_prints).order("created_at DESC")
+  end
+
+  def archive_product
+    product = Product.find(params[:id])
+    product.status = 'archived'
+    product.save
+    render :json => {
+      status:"archived"
+    }
   end
 
   # GET /products/1
@@ -26,6 +36,13 @@ class ProductsController < ApplicationController
   # POST /products.json
   def create
     @product = authorize Product.create!(product_params)
+
+    if params[:product][:has_requested_new_category]
+      @product.update_attributes(status:"pending_category_approval")
+    else
+      @product.update_attributes(status:"active")
+    end
+
     params[:product][:fine_prints].each do |fine_print|
       FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
     end
@@ -84,14 +101,12 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
-    @product.destroy
-    respond_to do |format|
-      format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @product.status = 'archived'
+    @product.save
+    render :json => {
+      status:"archived"
+    }
   end
 
   private

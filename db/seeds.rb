@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+if ENV["ACTIVATE_ALL_PRODUCTS"]
+  Product.update_all(status:'active')
+  puts "Activated All Products"
+end

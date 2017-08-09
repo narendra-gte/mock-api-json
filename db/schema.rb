@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715141134) do
+ActiveRecord::Schema.define(version: 20170804072314) do
 
   create_table "fine_prints", force: :cascade do |t|
     t.integer "product_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170715141134) do
     t.boolean "mobile_call_enabled"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status"
   end
 
   create_table "products_target_customers", force: :cascade do |t|
