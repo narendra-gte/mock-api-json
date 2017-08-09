@@ -59,3 +59,6 @@ group :production do
   gem 'heroku-deflater'
   gem 'pg'
 end
+
+gem 'jwt'
+gem 'pundit'

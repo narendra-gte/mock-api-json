@@ -1,17 +1,48 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :null_session
-  before_action do
-    handle_options_request
-		headers['Access-Control-Allow-Origin'] = '*'
-		headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-		headers['Access-Control-Request-Method'] = '*'
-		headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-		response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*'
-  	response.headers['Access-Control-Allow-Credentials'] = 'true'
-	end
+  before_action :authenticate, except: :handle_options_request
+  after_action :set_access_control_headers
 
-  def handle_options_request
-    head(:ok) if request.request_method == "OPTIONS"
+  def set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Max-Age'] = "1728000"
   end
 
+  def handle_options_request
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
+    headers['Access-Control-Max-Age'] = '1728000'
+    head :ok, :content_type => 'text/plain'
+  end
+
+  def authenticate
+    render json: {error: "unauthorized"}, status: 401  unless logged_in?
+  end
+
+  def logged_in?
+    !!current_user
+  end
+
+  def current_user
+    if auth_present? && !auth.nil? && auth["business_id"]
+      @current_user ||= auth["business_id"]
+    end
+  end
+
+  private
+    def token
+      request.env["HTTP_AUTHORIZATION"].scan(/Bearer(.*)$/).flatten.last
+    end
+
+    def auth
+      Auth.decode(token.strip)
+    end
+
+    def auth_present?
+      !!request.env.fetch("HTTP_AUTHORIZATION", "").scan(/Bearer/).flatten.first
+    end
 end

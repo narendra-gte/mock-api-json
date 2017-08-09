@@ -1,10 +1,11 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  skip_before_action :verify_authenticity_token
+  #skip_before_action :verify_authenticity_token
   # GET /products
   # GET /products.json
   def index
-    @products = Product.includes(:fine_prints).order("created_at DESC")
+    @products = Product.where(business_id: @current_user).includes(:fine_prints).order("created_at DESC")
+    authorize Product
   end
 
   # GET /products/1
@@ -14,7 +15,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    @product = authorize Product.new
   end
 
   # GET /products/1/edit
@@ -24,7 +25,7 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.create!(product_params)
+    @product = authorize Product.create!(product_params)
     params[:product][:fine_prints].each do |fine_print|
       FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
     end
@@ -96,7 +97,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = authorize Product.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -14,5 +14,8 @@ Rails.application.routes.draw do
   end
   resources :products
   root 'pages#main'
-  match "/products"=>"products#create", :via=>["POST","OPTIONS"]
+  match "*path",
+    controller: "application",
+    action: "handle_options_request",
+    via: [:options]
 end
