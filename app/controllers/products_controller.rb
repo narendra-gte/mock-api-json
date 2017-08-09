@@ -6,7 +6,6 @@ class ProductsController < ApplicationController
   def index
     @products = Product.where(business_id: @current_user).includes(:fine_prints).order("created_at DESC")
     authorize Product
-    @products = Product.all.includes(:fine_prints).order("created_at DESC")
   end
 
   def archive_product
