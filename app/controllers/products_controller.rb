@@ -4,9 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where(business_id: @current_user).includes(:fine_prints).order("created_at DESC")
-    # authorize Product
-    @products = Product.all.includes(:fine_prints).order("created_at DESC")
+    @products = Product.all.includes(:fine_prints,:purchase_options,:images_products,:products_target_customers).order("created_at DESC")
   end
 
   def archive_product
@@ -25,7 +23,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = authorize Product.new
+    @product = Product.new
   end
 
   # GET /products/1/edit
@@ -37,40 +35,44 @@ class ProductsController < ApplicationController
   def create
     @product = Product.create!(product_params)
 
-    if params[:product][:has_requested_new_category]
+    if params[:has_requested_new_category]
       @product.update_attributes(status:"pending_category_approval")
     else
       @product.update_attributes(status:"active")
     end
 
-    params[:product][:fine_prints].each do |fine_print|
-      FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
-    end
-
-    params[:product][:purchaseOptions].each_with_index do |purchase_option,index|
-       PurchaseOption.create!(
-        product_id:@product.id,
-        name: purchase_option["name"],
-        redemption_qty: purchase_option["redemption_qty"],
-        min_price: purchase_option["min_price"],
-        retail_price: purchase_option["retail_price"],
-        max_per_person: purchase_option["max_per_person"],
-        quantity_available: purchase_option["quantity_available"],
-        sku: purchase_option["sku"])
-    end
-
-    params[:product][:targetCustomers].each do |target_option|
-      if target_option["checked"]
-          new_target_customer = TargetCustomer.create!(gender:target_option["gender"] , min_age:target_option["minAge"] , max_age:target_option["maxAge"])
-          ProductsTargetCustomer.create!(product_id: @product.id, target_customer_id: new_target_customer.id)
+    if params[:fine_prints].present?
+      params[:fine_prints].each do |fine_print|
+        FinePrint.create!(:text=>fine_print,:product_id=>@product.id)
       end
     end
 
-    params[:product][:image_associations].each_with_index do |image,index|
-      if index == 0
-        ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: true)
-      else
-        ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: false)
+    params[:purchaseOptions].each_with_index do |purchase_option,index|
+      PurchaseOption.create!(
+      product_id:@product.id,
+      name: purchase_option["name"],
+      redemption_qty: purchase_option["redemption_qty"],
+      min_price: purchase_option["min_price"],
+      retail_price: purchase_option["retail_price"],
+      max_per_person: purchase_option["max_per_person"],
+      quantity_available: purchase_option["quantity_available"],
+      sku: purchase_option["sku"])
+    end
+
+    params[:targetCustomers].each do |target_option|
+      if target_option["checked"]
+        new_target_customer = TargetCustomer.create!(gender:target_option["gender"] , min_age:target_option["minAge"] , max_age:target_option["maxAge"])
+        ProductsTargetCustomer.create!(product_id: @product.id, target_customer_id: new_target_customer.id)
+      end
+    end
+
+    if params[:image_associations].present?
+      params[:image_associations].each_with_index do |image,index|
+        if index == 0
+          ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: true)
+        else
+          ImagesProduct.create!(product_id: @product.id, image_id: image["image_id"], is_default: false)
+        end
       end
     end
     if !@product.errors
@@ -110,13 +112,13 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def product_params
-      params.require(:product).permit(:category_id, :business_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def product_params
+    params.require(:product).permit(:category_id, :business_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled)
+  end
 end
