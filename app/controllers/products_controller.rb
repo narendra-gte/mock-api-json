@@ -105,11 +105,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product.status = 'archived'
-    @product.save
-    render :json => {
-      status:"archived"
-    }
   end
 
   private
