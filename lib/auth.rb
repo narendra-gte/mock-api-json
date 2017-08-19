@@ -2,13 +2,14 @@ require 'jwt'
 
 class Auth
   ALGORITHM = 'HS256'
+  leeway = 10 # seconds
 
   def self.decode(token)
     begin
       JWT.decode(token,
         auth_secret,
         true,
-        { algorithm: ALGORITHM }).first
+        { :exp_leeway => leeway, :algorithm => ALGORITHM }).first
     rescue JWT::ExpiredSignature
       nil
     end
