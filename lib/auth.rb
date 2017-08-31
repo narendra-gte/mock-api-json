@@ -8,7 +8,7 @@ class Auth
       JWT.decode(token,
         auth_secret,
         true,
-        { algorithm: ALGORITHM }).first
+        { :exp_leeway => 10, :algorithm => ALGORITHM }).first
     rescue JWT::ExpiredSignature
       nil
     end

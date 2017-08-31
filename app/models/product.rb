@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   has_many :images_products
   has_many :products_target_customers
   has_many :target_customers, through: :products_target_customers
+  belongs_to :product_type
 
   def status_value
     Product.statuses.select{|c,h| c==self.status}.values[0]

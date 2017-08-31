@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170804072314) do
+ActiveRecord::Schema.define(version: 20170825141255) do
 
   create_table "fine_prints", force: :cascade do |t|
     t.integer "product_id"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 20170804072314) do
     t.index ["tag_id"], name: "index_images_tags_on_tag_id"
   end
 
+  create_table "product_types", force: :cascade do |t|
+    t.text "name"
+    t.integer "category_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.integer "category_id"
     t.integer "business_id"
@@ -49,6 +57,8 @@ ActiveRecord::Schema.define(version: 20170804072314) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status"
+    t.integer "product_type_id"
+    t.index ["product_type_id"], name: "index_products_on_product_type_id"
   end
 
   create_table "products_target_customers", force: :cascade do |t|

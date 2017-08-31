@@ -113,8 +113,8 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def product_params
-    params.require(:product).permit(:status,:category_id, :business_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled)
-  end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def product_params
+      params.require(:product).permit(:category_id, :business_id, :product_type_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled)
+    end
 end
