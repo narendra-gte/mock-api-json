@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    return true
-    # render json: {error: "unauthorized"}, status: 401  unless logged_in?
+    #return true
+    render json: {error: "unauthorized"}, status: 401  unless logged_in?
   end
 
   def logged_in?
