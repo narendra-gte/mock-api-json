@@ -4,7 +4,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all.includes(:fine_prints,:purchase_options,:images_products,:products_target_customers).order("created_at DESC")
+    #@products = Product.all.includes(:fine_prints,:purchase_options,:images_products,:products_target_customers).order("created_at DESC")
+    @products = Product.where(business_id: @current_user).includes(:fine_prints, :purchase_options, :images_products, :products_target_customers).order("created_at DESC")
   end
 
   def archive_product
