@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  enum status: { active: 1, active_archived: 0, pending_category_approval:-1,pending_archived:2 } 
+  enum status: { active_archived: 0, pending_archived: 1, pending_category_approval: 2, active: 3 } 
   has_many :fine_prints
   has_many :purchase_options
   has_many :images_products
@@ -7,8 +7,7 @@ class Product < ApplicationRecord
   has_many :target_customers, through: :products_target_customers
   belongs_to :product_type
 
-  def status_value
-    Product.statuses.select{|c,h| c==self.status}.values[0]
+  def default_image
+    self.images_products.where(is_default: true).first
   end
-
 end

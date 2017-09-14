@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913131638) do
+ActiveRecord::Schema.define(version: 20170913132636) do
+
+  create_table "categories_product_types", force: :cascade do |t|
+    t.integer "category_id"
+    t.integer "product_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_type_id"], name: "index_categories_product_types_on_product_type_id"
+  end
 
   create_table "fine_prints", force: :cascade do |t|
     t.integer "product_id"
