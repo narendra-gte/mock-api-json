@@ -7,6 +7,10 @@ class Product < ApplicationRecord
   has_many :target_customers, through: :products_target_customers
   belongs_to :product_type
 
+  validates :title, presence: true, length: { minimum: 1, maximum: 80 }
+  validates :category_id, presence: true
+  validates :status, presence: true
+
   def default_image
     self.images_products.where(is_default: true).first
   end

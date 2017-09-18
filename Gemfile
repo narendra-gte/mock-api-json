@@ -62,3 +62,4 @@ end
 
 gem 'jwt'
 gem 'pundit'
+gem 'faker'

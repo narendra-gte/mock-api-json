@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :product_types
   resources :tags
   resources :tag_categories
+  resources :target_customers, only: [:index]
   resources :purchase_options do
     collection do
       get :get_purchase_options_of_product

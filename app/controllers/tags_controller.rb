@@ -4,7 +4,11 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.all
+    if params[:keyword].present?
+      @tags = Tag.where("name LIKE ?",  "%#{params[:keyword]}%")
+    else
+      @tags = Tag.all
+    end
   end
 
   # GET /tags/1
