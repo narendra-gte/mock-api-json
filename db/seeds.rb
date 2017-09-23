@@ -5,9 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-@valid_category_ids_lma = [84, 66]
-@valid_sub_category_ids_from_lma = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 603, 604, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99, 616, 617, 622, 623]
-
+@valid_category_ids_lma = [84, 1103]
+#@valid_sub_category_ids_from_lma = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 603, 604, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99, 616, 617, 622, 623]
+@valid_sub_category_ids_from_lma = [85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99, 616, 617, 622, 623, 624, 1061];
 @valid_image_ids_from_lma = [55101, 55124, 55145, 55234, 55237, 55238, 55240, 55241, 55242, 55243, 55245, 55246, 55247, 55249, 55250, 55250, 55253, 55254, 55256, 55258, 55259, 55261, 55262]
 
 @valid_business_ids_from_lma = [1, 2, 3, 4]
@@ -30,6 +30,7 @@
 ]
 
 def create_target_customers
+  puts 'Creating target customers'
   @target_customers.each do |tc| 
     unless TargetCustomer.find_by min_age: tc[:min_age], gender: tc[:gender]
       c= TargetCustomer.create!(
@@ -44,6 +45,7 @@ def create_target_customers
 end
 
 def create_product_types
+  puts 'Creating product types'
   @valid_sub_category_ids_from_lma.each do |sc_id|
     5.times do |i|
       pt = ProductType.new(
@@ -58,6 +60,7 @@ def create_product_types
 end
 
 def create_products
+  puts 'Creating products'
   unless(Product.count >= 200)
     30.times do |i|
       product_type = ProductType.all.sample
@@ -109,6 +112,7 @@ def create_products
 end
 
 def create_tag_categories_and_tags
+  puts 'Creating tags'
   100.times do |i|
     name = Faker::Commerce.department(1)
     unless TagCategory.find_by name: name
@@ -124,6 +128,7 @@ def create_tag_categories_and_tags
 end
 
 def relate_tags_to_images
+  puts 'Relating tags to images'
   @valid_image_ids_from_lma.each do |image_id|
     Tag.all.sample(rand 0..10).each do |tag|
       t = tag.images_tags.build(image_id: image_id)
@@ -160,3 +165,4 @@ relate_tags_to_images
 #    puts "Created #{tag}"
 #  end
 #end
+

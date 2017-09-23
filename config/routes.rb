@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :images_tags
   resources :categories_product_types
   resources :product_types
   resources :tags

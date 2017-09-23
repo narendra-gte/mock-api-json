@@ -11,6 +11,14 @@ class Product < ApplicationRecord
   validates :category_id, presence: true
   validates :status, presence: true
 
+  accepts_nested_attributes_for :fine_prints, allow_destroy: true, reject_if: proc { |attributes| attributes['text'].blank? }
+
+  accepts_nested_attributes_for :purchase_options, allow_destroy: true, reject_if: :all_blank
+
+  accepts_nested_attributes_for :images_products, allow_destroy: true, reject_if: :all_blank
+
+  accepts_nested_attributes_for :products_target_customers, allow_destroy: true, reject_if: :all_blank
+
   def default_image
     self.images_products.where(is_default: true).first
   end
