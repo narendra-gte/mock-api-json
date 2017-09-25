@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  enum status: { active_archived: 0, pending_archived: 1, pending_category_approval: 2, active: 3 } 
+  enum status: [ :active, :retired ] 
   has_many :fine_prints
   has_many :purchase_options
   has_many :images_products

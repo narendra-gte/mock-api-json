@@ -5,6 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+@businesses = {1 => {:categories => [84, 1103]}, 2 => {:categories => [84, 1103]}, 3 => {:categories => [84, 1103]}, 4 => {:categories => [758]}}
+@categories = {
+  84 => {:sub_categories => [85,86,87,88,89,91,92,93,94,95,96,97,98,99,616,617,622,623,624,1061]}, 
+  758 => {:sub_categories => []}, 
+  1103 => {:sub_categories => []}}
 @valid_category_ids_lma = [84, 1103]
 #@valid_sub_category_ids_from_lma = [66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 603, 604, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99, 616, 617, 622, 623]
 @valid_sub_category_ids_from_lma = [85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99, 616, 617, 622, 623, 624, 1061];
@@ -46,13 +51,12 @@ end
 
 def create_product_types
   puts 'Creating product types'
-  @valid_sub_category_ids_from_lma.each do |sc_id|
-    5.times do |i|
+  unless ProductType.count >= 200
+    100.times do |i|
       pt = ProductType.new(
         name: Faker::Commerce.product_name.split()[-1], 
         status: ProductType.statuses.keys.sample
       )
-      pt.categories_product_types.build(category_id: sc_id)
       pt.save
       puts pt.errors.full_messages if pt.errors.any?
     end
@@ -66,7 +70,7 @@ def create_products
       product_type = ProductType.all.sample
       product_title = Faker::Commerce.product_name
       p = Product.new(
-        category_id: product_type.categories_product_types.sample.category_id,
+        category_id: @valid_sub_category_ids_from_lma.sample,
         business_id: @valid_business_ids_from_lma.sample,
         title: product_title,
         description: Faker::Lorem.paragraph,
@@ -81,6 +85,7 @@ def create_products
       @valid_image_ids_from_lma.sample(rand 1..20).each do |image_id|
         p.images_products.build(
           image_id: image_id,
+          is_default: false,
         )
       end
       ip = p.images_products.sample
