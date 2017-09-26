@@ -19,6 +19,8 @@ class Product < ApplicationRecord
 
   accepts_nested_attributes_for :products_target_customers, allow_destroy: true, reject_if: :all_blank
 
+  accepts_nested_attributes_for :product_type
+
   def default_image
     self.images_products.where(is_default: true).first
   end

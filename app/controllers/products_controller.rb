@@ -127,6 +127,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:category_id, :business_id, :product_type_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled, :status, fine_prints_attributes: [:id, :text, :_destroy], purchase_options_attributes: [:id, :name, :redemption_qty, :sku, :min_price, :max_per_person, :retail_price, :quantity_available, :_destroy], products_target_customers_attributes: [:id, :product_id, :target_customer_id, :_destroy])
+      params.require(:product).permit(:category_id, :business_id, :product_type_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled, :status, product_type_attributes: [:id, :name, :status], fine_prints_attributes: [:id, :text, :_destroy], purchase_options_attributes: [:id, :name, :redemption_qty, :sku, :min_price, :max_per_person, :retail_price, :quantity_available, :_destroy], products_target_customers_attributes: [:id, :product_id, :target_customer_id, :_destroy])
     end
 end

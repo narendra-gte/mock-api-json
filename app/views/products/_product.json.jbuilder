@@ -8,7 +8,7 @@ json.category do
   json.id product.category_id
   json.name nil
 end
-json.product_type do
+json.product_type_attributes do
   json.partial! 'product_types/product_type', product_type: product.product_type
 end
 json.fine_prints_attributes do
