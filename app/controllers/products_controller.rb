@@ -35,6 +35,12 @@ class ProductsController < ApplicationController
   def create
     params[:product][:category_id] = params[:product][:category][:id]
     @product = Product.new(product_params)
+    if(params[:product][:product_type][:id].present?)
+      product_type = ProductType.find(params[:product][:product_type][:id])
+    else
+      product_type = ProductType.create!(name: params[:product][:product_type][:name], status: params[:product][:product_type][:status])
+    end
+    @product.product_type_id = product_type.id
     @product.business_id = @current_user
     respond_to do |format|
       if @product.save
@@ -106,6 +112,12 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       params[:product][:category_id] = params[:product][:category][:id]
+      if(params[:product][:product_type][:id].present?)
+        product_type = ProductType.find(params[:product][:product_type][:id])
+      else
+        product_type = ProductType.create!(name: params[:product][:product_type][:name], status: params[:product][:product_type][:status])
+      end
+      @product.product_type_id = product_type.id
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
@@ -127,6 +139,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:category_id, :business_id, :product_type_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled, :status, product_type_attributes: [:id, :name, :status], fine_prints_attributes: [:id, :text, :_destroy], purchase_options_attributes: [:id, :name, :redemption_qty, :sku, :min_price, :max_per_person, :retail_price, :quantity_available, :_destroy], products_target_customers_attributes: [:id, :product_id, :target_customer_id, :_destroy])
+      params.require(:product).permit(:category_id, :business_id, :product_type_id, :title, :description, :show_discount, :gifting_enabled, :sharing_enabled, :mobile_call_enabled, :status, fine_prints_attributes: [:id, :text, :_destroy], purchase_options_attributes: [:id, :name, :redemption_qty, :sku, :min_price, :max_per_person, :retail_price, :quantity_available, :_destroy], products_target_customers_attributes: [:id, :product_id, :target_customer_id, :_destroy])
     end
 end
