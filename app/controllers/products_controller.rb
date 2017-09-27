@@ -4,16 +4,8 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where(business_id: @current_user).includes(:fine_prints, :purchase_options, :images_products, :target_customers).order("created_at DESC")
-  end
-
-  def archive_product
-    product = Product.find(params[:id])
-    product.status = 'archived'
-    product.save
-    render :json => {
-      status:"archived"
-    }
+    @products = Product.where(business_id: @current_user.id).includes(:fine_prints, :purchase_options, :images_products, :target_customers).order("created_at DESC")
+    authorize Product
   end
 
   # GET /products/1
@@ -41,7 +33,8 @@ class ProductsController < ApplicationController
       product_type = ProductType.create!(name: params[:product][:product_type][:name], status: params[:product][:product_type][:status])
     end
     @product.product_type_id = product_type.id
-    @product.business_id = @current_user
+    @product.business_id = @current_user.id
+    authorize @product
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: 'Tag was successfully created.' }
@@ -135,6 +128,7 @@ class ProductsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_product
     @product = Product.find(params[:id])
+    authorize @product
   end
 
     # Never trust parameters from the scary internet, only allow the white list through.

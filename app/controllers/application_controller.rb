@@ -29,8 +29,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if auth_present? && !auth.nil? && auth["business_id"]
-      @current_user ||= auth["business_id"]
+    if auth_present? && !auth.nil?
+      if auth["business_id"]
+        @current_user ||= {id: auth["business_id"], is_admin: false}
+      elsif auth["admin_id"]
+        @current_user ||= {id: nil, admin_id: auth["admin_id"], is_admin: true }
+      end
+      
     end
   end
 
