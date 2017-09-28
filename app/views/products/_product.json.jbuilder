@@ -8,7 +8,7 @@ json.category do
   json.id product.category_id
   json.name nil
 end
-unless hide_product_types
+unless defined? hide_product_types
   json.product_type do
     json.partial! 'product_types/product_type', product_type: product.product_type
   end

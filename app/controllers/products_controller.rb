@@ -4,7 +4,12 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where(business_id: @current_user.id).includes(:fine_prints, :purchase_options, :images_products, :target_customers).order("created_at DESC")
+    if @current_user.admin?
+      @products = Product.all
+    else
+      @products = Product.where(business_id: @current_user.id).includes(:fine_prints, :purchase_options, :images_products, :target_customers).order("created_at DESC")
+    end
+
     authorize Product
   end
 

@@ -31,9 +31,9 @@ class ApplicationController < ActionController::Base
   def current_user
     if auth_present? && !auth.nil?
       if auth["business_id"]
-        @current_user ||= OpenStruct.new( {id: auth["business_id"], is_admin: false})
+        @current_user ||= OpenStruct.new( {id: auth["business_id"], admin?: false})
       elsif auth["admin_id"]
-        @current_user ||= OpenStruct.new( {id: nil, admin_id: auth["admin_id"], is_admin: true })
+        @current_user ||= OpenStruct.new( {id: nil, admin_id: auth["admin_id"], admin?: true })
       end
       
     end
