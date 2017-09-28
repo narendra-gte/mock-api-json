@@ -8,10 +8,11 @@ json.category do
   json.id product.category_id
   json.name nil
 end
-unless defined? hide_product_types
-  json.product_type do
-    json.partial! 'product_types/product_type', product_type: product.product_type
-  end
+json.product_type do
+  json.id product.product_type.id
+  json.name product.product_type.name
+  json.staus product.product_type.status
+  json.created_at product.product_type.created_at
 end
 json.fine_prints_attributes do
   json.array! product.fine_prints, partial: 'fine_prints/fine_print', as: :fine_print
