@@ -40,7 +40,7 @@ class ApplicationPolicy
   end
 
   def is_owner?
-    user == record.id
+    user.id == record.business_id
   end
 
   def is_admin?
