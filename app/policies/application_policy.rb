@@ -44,7 +44,6 @@ class ApplicationPolicy
   end
 
   def is_admin?
-    #false
     !user.nil? && user.is_admin
   end
 
