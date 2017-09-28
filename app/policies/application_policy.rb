@@ -24,7 +24,7 @@ class ApplicationPolicy
   end
 
   def update?
-    is_owner? #|| is_admin?
+    is_owner? || is_admin?
   end
 
   def edit?
@@ -32,7 +32,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    is_owner? #|| is_admin?
+    is_owner? || is_admin?
   end
 
   def scope
@@ -40,7 +40,7 @@ class ApplicationPolicy
   end
 
   def is_owner?
-    user == record.business_id
+    user == record.id
   end
 
   def is_admin?
