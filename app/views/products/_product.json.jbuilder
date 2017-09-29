@@ -11,7 +11,7 @@ end
 json.product_type do
   json.id product.product_type.id
   json.name product.product_type.name
-  json.staus product.product_type.status
+  json.status product.product_type.status
   json.created_at product.product_type.created_at
 end
 json.fine_prints_attributes do
